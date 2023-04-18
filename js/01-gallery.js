@@ -10,17 +10,13 @@ const createGalleryItem = ({ preview, original, description }) => {
   link.classList.add('gallery__link');
   link.href = original;
 
-  const image = document.createElement('img');
-  image.classList.add('gallery__image');
-  image.src = preview;
-  image.dataset.source = original;
-  image.alt = description;
-
-  link.appendChild(image);
   galleryItem.appendChild(link);
+
+  link.insertAdjacentHTML('afterbegin', `<img src="${preview}" alt="${description}" class="gallery__image" data-source="${original}"/>`);
 
   return galleryItem;
 };
+
 
 const renderGallery = galleryItems => {
   const galleryElements = galleryItems.map(createGalleryItem);
@@ -56,19 +52,9 @@ document.addEventListener("keydown", onEscKeyPress);
 
 renderGallery(galleryItems);
 
-console.log(galleryItems);
 
 
-const handleGalleryClick = event => {
-  event.preventDefault();
 
-  const galleryItem = event.target.closest('.gallery__item');
-  if (!galleryItem) return;
 
-  const largeImageUrl = galleryItem.querySelector('.gallery__image').dataset.source;
-  console.log(largeImageUrl);
-};
-
-galleryList.addEventListener('click', handleGalleryClick);
 
 
